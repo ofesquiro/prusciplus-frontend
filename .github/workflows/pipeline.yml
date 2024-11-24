@@ -24,4 +24,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ofesquiro/PrusciPlus-frontend:${{ github.sha }}
+          tags: ofesquiro/prusciplus-frontend:${{ github.sha }}
