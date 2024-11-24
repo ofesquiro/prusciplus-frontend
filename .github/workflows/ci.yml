@@ -22,6 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        run: npm install -g @angular/cli
         working-directory: prusciplus-app
 
       - name: Run tests
