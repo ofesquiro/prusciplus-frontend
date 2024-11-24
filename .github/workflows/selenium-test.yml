@@ -1,0 +1,50 @@
+name: Selenium Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  selenium-tests:
+    needs: build
+    runs-on: ubuntu-latest
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome
+        ports:
+          - 4444:4444
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Pull Docker image
+        run: |
+          docker pull ghcr.io/${{ github.repository }}/prusciplus-frontend:${{ github.sha }}
+
+      - name: Run Docker container
+        run: |
+          docker run -d -p 8080:80 ghcr.io/${{ github.repository }}/prusciplus-frontend:${{ github.sha }}
+
+      - name: Run Selenium tests
+        run: |
+          chmod +x ./run-selenium-tests.sh
+          ./run-selenium-tests.sh
+          
+      - name: Notify Sentry of Deployment
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          npx @sentry/cli releases new -p your-project-name ${{ github.sha }}
+          npx @sentry/cli releases finalize ${{ github.sha }}
+          npx @sentry/cli releases deploys ${{ github.sha }} new -e production
