@@ -29,7 +29,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build -t ghcr.io/ofesquiro/prusciplus-frontend/app:${{ github.ref_name }} ./prusciplus-app
+          docker build -t ghcr.io/ofesquiro/prusciplus-frontend/app:${{ github.ref_name }} .
       - name: Push the Docker image
         run: |
           docker push ghcr.io/ofesquiro/prusciplus-frontend/app:${{ github.ref_name }}
