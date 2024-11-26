@@ -30,6 +30,15 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build -t ghcr.io/ofesquiro/prusciplus-frontend/app:${{ github.ref_name }} .
+        
+      - name: Test the Docker image
+        run: |
+          docker run -d --name test-container ghcr.io/ofesquiro/prusciplus-frontend/app:${{ github.ref_name }}
+          sleep 10
+          docker ps -a
+          docker logs test-container
+          docker rm -f test-container
+      
       - name: Push the Docker image
         run: |
           docker push ghcr.io/ofesquiro/prusciplus-frontend/app:${{ github.ref_name }}
