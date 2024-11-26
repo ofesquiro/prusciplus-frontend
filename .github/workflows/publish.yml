@@ -4,8 +4,8 @@ on:
   pull_request:
     types: [closed]
     branches:
-      - Dev
-      - QA
+      - dev
+      - qa
       - main
 
 jobs:
@@ -29,7 +29,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/${{ github.ref_name }}:${{ github.ref_name }} .
+          docker build -t ghcr.io/ofesquiro/prusciplus-frontend/app:${{ github.ref_name }} ./prusciplus-app
       - name: Push the Docker image
         run: |
-          docker push ghcr.io/${{ github.repository }}/${{ github.ref_name }}:${{ github.ref_name }}
+          docker push ghcr.io/ofesquiro/prusciplus-frontend/app:${{ github.ref_name }}
