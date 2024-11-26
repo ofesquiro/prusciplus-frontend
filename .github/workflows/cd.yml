@@ -30,4 +30,4 @@ jobs:
 
       - name: Run tests
         working-directory: prusciplus-app
-        run: npm run test
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
