@@ -9,13 +9,14 @@ import { ActorData } from "./definitions/ServerResponse";
 import { Categoria } from "./Categoria";
 import { PutObj } from "./definitions/PutObj";
 import { setLevel } from "./definitions/StorageVariables";
-
+import { environment } from "./environment.prod";
 @Injectable({
     providedIn: 'root'
 })
+
 export class PrusciPlusService {
     private apiUrl : string = "http://localhost:3000/api";
-
+    private mockMode : boolean = environment.mockMode;
     constructor(private httpClient: HttpClient) {
     }
 
@@ -27,6 +28,10 @@ export class PrusciPlusService {
 
 
     public getAllFilms() :GetMovieResponse {
+        if (this.mockMode) return {
+            success: true,
+            film: new Observable<MovieData>()
+        }
         let response : GetMovieResponse;
         try{
             const filmsEndPoint : string = this.apiUrl + "/movies";
@@ -45,6 +50,10 @@ export class PrusciPlusService {
     }
 
     public getAllWithPagination(page: number, limit: number): GetMovieResponse {
+        if (this.mockMode) return {
+            success: true,
+            film: new Observable<MovieData>()
+        }
         let response: GetMovieResponse;
         try {
             const filmsEndPoint: string = `${this.apiUrl}/movies?page=${page}&limit=${limit}`;
@@ -253,6 +262,10 @@ export class PrusciPlusService {
         }
     }
     public getAllActors() : GetActorResponse{
+            if (this.mockMode) return {
+            success: true,
+            actor: new Observable<ActorData>()
+        }
         let response : GetActorResponse;
         try{
             const actorsEndPoint : string = this.apiUrl + "/actors";

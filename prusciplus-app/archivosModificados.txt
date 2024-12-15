@@ -1,7 +1,0 @@
-para app.configs.ts se modifico completamente. sugiero implementarlo en el modelo final 
-
-van a ver varios componentes nuevos. la idea es que todas las partes que estan tiradas en el app.component las dividamos en varios componentes para no repetir codigo ni tener un archivo de 191847 lineas.
-
-el log in form no se por que pero algo no me gusta. lo voy a dejar asi por ahora
-
-si van a usar los mismos forms, cosas que yo haga, en varios uso bootstrap asi que tienen que agregar el link de bootstrap a angular.json para que lo use
